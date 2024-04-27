@@ -1,0 +1,25 @@
+.card {
+  margin-bottom: 50px;
+  margin-left: 50px;
+  margin-right: 50px;
+}
+
+.searchBar {
+  width: 600px;
+  height: 715px;
+  background-color: #d9d9d9;
+  border-radius: 25px;
+}
+
+.formMargin {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.barNavi {
+  margin-bottom: 100px;
+}
+
+.row {
+  column-gap: -10px;
+}
