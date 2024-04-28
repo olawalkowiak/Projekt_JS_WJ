@@ -17,9 +17,75 @@
 }
 
 .barNavi {
-  margin-bottom: 100px;
+  margin-bottom: 150px;
 }
 
 .row {
   column-gap: -10px;
+}
+
+.textSloganOne {
+  position: absolute;
+  top: 11%;
+  left: 5%;
+  font-size: 40px;
+  font-weight: 100;
+}
+
+.textSloganTwo {
+  position: absolute;
+  left: 76%;
+  top: 11%;
+  font-size: 40px;
+  font-weight: 100;
+}
+
+.buyButton {
+}
+
+#carBrand {
+  margin-right: 10%;
+  margin-left: 10%;
+  margin-top: 15%;
+  padding: 15px;
+  border-radius: 10px;
+  border:none;
+}
+
+#carModel {
+  padding: 15px;
+  border-radius: 10px;
+  border: none;
+}
+
+#carProdYear {
+  margin-right: 10%;
+  margin-left: 10%;
+  margin-top: 10%;
+  padding: 15px;
+  border-radius: 10px;
+  border: none;
+}
+
+#floatingSelect {
+    margin-left: 10%;
+  margin-top: 10%;
+  width: 500px;
+}
+
+#searchButton{
+    margin-top: 10%;
+    margin-left: 55%;
+    border-radius: 10px;
+    padding:20px;
+    width: 200px;
+    background-color:#085ed6;
+    color: aliceblue;
+    border:none;
+
+}
+
+#searchButton:hover{
+    background-color:rgb(148, 190, 227);
+    color:black;
 }
