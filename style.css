@@ -4,11 +4,22 @@
   margin-right: 50px;
 }
 
-.searchBar {
+.searchForm {
   width: 600px;
   height: 715px;
   background-color: #d9d9d9;
   border-radius: 25px;
+}
+
+.left .right {
+  float: left;
+  width: 20%;
+}
+
+@media screen and (max-width: 800px) {
+  .left .right {
+    width: 100%;
+  }
 }
 
 .formMargin {
@@ -40,15 +51,13 @@
   font-weight: 100;
 }
 
-
-
 #carBrand {
   margin-right: 10%;
   margin-left: 10%;
   margin-top: 15%;
   padding: 15px;
   border-radius: 10px;
-  border:none;
+  border: none;
 }
 
 #carModel {
@@ -67,24 +76,134 @@
 }
 
 #floatingSelect {
-    margin-left: 10%;
+  margin-left: 10%;
   margin-top: 10%;
   width: 500px;
 }
 
-#searchButton{
-    margin-top: 10%;
-    margin-left: 55%;
-    border-radius: 10px;
-    padding:20px;
-    width: 200px;
-    background-color:#085ed6;
-    color: aliceblue;
-    border:none;
-
+.flex-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
 }
 
-#searchButton:hover{
-    background-color:rgb(148, 190, 227);
-    color:black;
+#searchButton {
+  margin-top: 10%;
+  margin-left: 55%;
+  border-radius: 10px;
+  padding: 20px;
+  width: 200px;
+  background-color: #085ed6;
+  color: aliceblue;
+  border: none;
+}
+
+#searchButton:hover {
+  background-color: rgb(148, 190, 227);
+  color: black;
+}
+
+/* orderConfig */
+
+.carImage {
+  background-color: #085ed6;
+  max-width: 800px;
+  max-height: 800px;
+}
+
+/* orderConfig */
+
+.order-config {
+  display: flex;
+  justify-content: space-evenly;
+  margin: -100px;
+}
+.carImg {
+  background-color:#f2f2f2;
+  width: 900px;
+  height: 600px;
+  border-radius: 15px;
+}
+
+.total-cost {
+  background-color: #f2f2f2;
+  width: 900px;
+  height: 130px;
+  border-radius: 15px;
+  margin-top: 20px;
+}
+
+.carForm {
+  background-color: #f2f2f2;
+  width: 500px;
+  height: 750px;
+  border-radius: 15px;
+}
+
+.radio-text {
+  padding-top: 30px;
+  padding-left: 50px;
+}
+
+.radio-group {
+  padding-top: 20px;
+  padding-left: 50px;
+  padding-bottom: 30px;
+}
+
+.cred-text {
+  margin-left: 50px;
+}
+
+.name {
+  padding-top: 30px;
+  padding-left: 50px;
+}
+
+.surname {
+  padding-left: 50px;
+  padding-top: 10px;
+  margin-bottom: 30px;
+}
+
+#fname {
+  border-radius: 15px;
+  border: none;
+}
+
+#lname {
+  border-radius: 15px;
+  border: none;
+}
+
+.date-text {
+  padding-top: 20px;
+  padding-left: 50px;
+}
+
+.date-picker {
+  margin-top: 35px;
+  margin-left: 50px;
+  border-radius: 15px;
+  border: none;
+  padding: 5px;
+}
+
+.acc-text {
+  padding-top: 30px;
+  padding-left: 50px;
+  padding-bottom: 30px;
+}
+
+#total-price {
+  background-color: #f2f2f2;
+  padding: 50px;
+  border: 1px solid #ccc;
+  border-radius: 15px;
+  margin-top: 20px;
+  display: inline-block;
+}
+
+#accessory-container {
+  margin-left: 50px;
 }

@@ -55,45 +55,66 @@
         </div>
       </div>
     </nav>
-    <!-- SLOGANS -->
-    <div class="row">
-    <span class="textSloganOne">Poznaj naszą ofertę</span>
-    <span class="textSloganTwo">Czego szukasz?</span>
-    </div>
+    <div class="order-config">
+      <div class="row">
+        <div class="col-8">
+          <div class="carImg"></div>
+          <div class="total-cost" id="total-price"> <span id="total-price-style"> Suma 0 PLN</span></div>
+        </div>
+        <div class="col-4">
+          <div class="carForm">
+              <div class="purchase-form">
+                  <p class="radio-text"> 1. Preferowana metoda finansowania:</p>
+                <div class="radio-group"> 
+                  
+                        <div class="col-8">
+                <input lass="form-check-input" type="radio" id="cash" />
+                <label class="form-check-label for="cash">Gotówka</label>
+                </div>
+                <div class="col-8">
+                <input class="form-check-input" type="radio" id="leasing" />
+                <label class="form-check-label for="leasing">Leasing</label>
+                
+                </div>
+                </div>
 
-    <!-- PODZIAŁ NA KOLUMNY Z KARTAMI POJAZDÓW -->
-    <div class="row">
-       
-            <div class="row">
-              <div id="card-container" class="col-8 left"></div>
-              
-      <div class="col-4 right" >
-        <div class="formMargin">
-          <div class="searchForm">
-            <input type="text" id="carBrand" placeholder="marka pojazdu" />
-            <input type="text" id="carModel" placeholder="model pojazdu" />
-            <input type="number" id="carProdYear" placeholder="rok produkcji" />
-
-            <div class="form-floating" id="priceForm">
-              <select
-                class="form-select"
-                id="floatingSelect"
-                aria-label="Floating label select example"
-              >
-                <option selected>Wybierz zakres cen</option>
-                <option value="1">>10000</option>
-                <option value="2">>30000</option>
-                <option value="3">>50000</option>
-                <option value="3">>100000</option>
-              </select>
             </div>
-            <button type="button" id="searchButton">Szukaj</button>
-          </div>
-        </div>
-        </div>
-    
+            <div class="credentials">
+                <p class="cred-text">2. Uzupelnij swoje dane:</p>
+                <div class="cred-form">
+                    <form>
+                        <div class="name">
+                        <label for="fname">imię:</label><br>
+                        <input type="text" id="fname" name="fname"><br>
+                        </div>
+                        <div class="surname">
+                
+                        <label for="lname">Nazwisko:</label><br>
+                        <input type="text" id="lname" name="lname">
+                        </div>
+                      </form>
+                      <div class="date">
+<div class="date-text">3. Wybierz date odbioru auta:</div>
+<div class="date-form">
+  <input type="date" class="date-picker">
+</div>
 
-     
+                      </div>
+
+                    <div class="add-accessories">
+                      <div class="acc-text">
+                        4. Zaznacz akcesoria, które chcesz dodać:
+                      </div>
+                      <div id="accessory-container">
+
+                      </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        </div>
+      </div>
     </div>
   </body>
 </html>
