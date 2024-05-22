@@ -1,7 +1,6 @@
-
 let vehicles = [
   {
-    id:1,
+    id: 1,
     brand: "Hyundai",
     model: "i30",
     productionYear: "2012",
@@ -12,7 +11,7 @@ let vehicles = [
     img: "https://aaaautoeuimg.vshcdn.net/thumb/300127603_360x270x75.jpg?68165",
   },
   {
-    id:2,
+    id: 2,
     brand: "Opel",
     model: "Astra",
     productionYear: "2015",
@@ -23,7 +22,7 @@ let vehicles = [
     img: "https://aaaautoeuimg.vshcdn.net/thumb/1010009274_360x270x75.jpg?74713",
   },
   {
-    id:3,
+    id: 3,
     brand: "Dacia",
     model: "Duster",
     productionYear: "2022",
@@ -34,7 +33,7 @@ let vehicles = [
     img: "https://aaaautoeuimg.vshcdn.net/thumb/300121291_1024x768x95.jpg?36144",
   },
   {
-    id:4,
+    id: 4,
     brand: "Skoda",
     model: "Kamiq",
     productionYear: "2023",
@@ -46,8 +45,7 @@ let vehicles = [
   },
 ];
 document.addEventListener("DOMContentLoaded", () => {
-    displayCards(vehicles);
-
+  displayCards(vehicles);
 });
 function displayCards(vehicles) {
   let html = "";
@@ -76,64 +74,63 @@ function displayCards(vehicles) {
   document.getElementById("card-container").innerHTML = html;
 }
 
-
-// wyszukiwanie aut 
+// wyszukiwanie aut
 
 function searchCars() {
   const brand = document.getElementById("carBrand").value.toLowerCase();
   const model = document.getElementById("carModel").value.toLowerCase();
   const prodYear = parseInt(document.getElementById("carProdYear").value, 10);
-  const priceRange = parseInt(document.getElementById("floatingSelect").value, 10) * 10000;
-  
+  const priceRange =
+    parseInt(document.getElementById("floatingSelect").value, 10) * 10000;
+
   const results = vehicles.filter((vehicle) => {
     const matchesBrand = !brand || vehicle.brand.toLowerCase().includes(brand);
     const matchesModel = !model || vehicle.model.toLowerCase().includes(model);
     const matchesYear = !prodYear || vehicle.productionYear >= prodYear;
-    const matchesPrice = !priceRange || parseInt(vehicle.price.replace(" ", ""), 10) >= priceRange;
-    
+    const matchesPrice =
+      !priceRange || parseInt(vehicle.price.replace(" ", ""), 10) >= priceRange;
+
     return matchesBrand && matchesModel && matchesYear && matchesPrice;
   });
-  
+
   displayCards(results, "searchResults");
-  }
-  
+}
 
+// SECOND PAGE
 
-// SECOND PAGE 
+document.addEventListener("DOMContentLoaded", () => {
+  let accessories = [
+    {
+      name: "opony zimowe",
+      price: "7000",
+    },
+    {
+      name: "pokrowce na fotele",
+      price: "1500",
+    },
+    {
+      name: "kołpaki",
+      price: "1000",
+    },
+    {
+      name: "powłoka ceramiczna",
+      price: "15000",
+    },
+    {
+      name: "przyciemnianie szyb",
+      price: "4000",
+    },
+    {
+      name: "pakiet serwisowy 1 rok",
+      price: "900",
+    },
+  ];
 
-      document.addEventListener("DOMContentLoaded", () => {
-        let accessories = [
-          {
-            name: "opony zimowe",
-            price: "7000",
-          },
-          {
-            name: "pokrowce na fotele",
-            price: "1500",
-          },
-          {
-            name: "kołpaki",
-            price: "1000",
-          },
-          {
-            name: "powłoka ceramiczna",
-            price: "15000",
-          },
-          {
-            name: "przyciemnianie szyb",
-            price: "4000",
-          },
-          {
-            name: "pakiet serwisowy 1 rok",
-            price: "900",
-          },
-        ];
-  
-        function generateAccessoryCheckboxes(accessories) {
-          let html = "";
-          for (let i = 0; i < accessories.length; i++) {
-            let accessory = accessories[i];
-            html += `
+  function generateAccessoryCheckboxes(accessories) {
+    let html = "";
+    for (let i = 0; i < accessories.length; i++) {
+      let accessory = accessories[i];
+      html += `
               <div class="form-check">
                 <input class="form-check-input" type="checkbox" name="accessory[]" id="${accessory.name}" value="${accessory.price}">
                 <label class="form-check-label" for="${accessory.name}">
@@ -141,27 +138,73 @@ function searchCars() {
                 </label>
               </div>
             `;
-          }
-          return html;
-        }
+    }
+    return html;
+  }
+
+  function calculateTotalPrice(accessories) {
+    let totalPrice = 0;
+    let selectedAccessories = document.querySelectorAll(
+      'input[name="accessory[]"]:checked'
+    );
+    for (let i = 0; i < selectedAccessories.length; i++) {
+      totalPrice += parseInt(selectedAccessories[i].value);
+    }
   
-        function calculateTotalPrice(accessories) {
-          let totalPrice = 0;
-          let selectedAccessories = document.querySelectorAll('input[name="accessory[]"]:checked');
-          for (let i = 0; i < selectedAccessories.length; i++) {
-            totalPrice += parseInt(selectedAccessories[i].value);
-          }
-          document.getElementById("total-price").innerText = `Suma: ${totalPrice} zł`;
-        }
-  
-        document.getElementById("accessory-container").innerHTML = generateAccessoryCheckboxes(accessories);
+     document.getElementById("total-price").innerText = `Suma: ${totalPrice} zł`;
+}
+    
+
+  document.getElementById("accessory-container").innerHTML =
+    generateAccessoryCheckboxes(accessories);
+  calculateTotalPrice(accessories);
+
+  document
+    .querySelectorAll('input[name="accessory[]"]')
+    .forEach((accessory) => {
+      accessory.addEventListener("change", () => {
         calculateTotalPrice(accessories);
-  
-        document.querySelectorAll('input[name="accessory[]"]').forEach((accessory) => {
-          accessory.addEventListener("change", () => {
-            calculateTotalPrice(accessories);
-          });
-        });
       });
-    
-    
+    });
+});
+
+// przekierowanie z 1 do 2 strony za pomocą przycisku "Kupuje"
+
+function showMoreInfo(index) {
+  const vehicle = vehicles[index];
+  const url = `orderConfig.html?image=${encodeURIComponent(
+    vehicle.img
+  )}&price=${encodeURIComponent(vehicle.price)}`;
+  sessionStorage.setItem("carPrice", vehicle.price);
+  window.location.href = url;
+}
+
+function getUrlParameter(name) {
+  name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+  const regex = new RegExp("[\\?&]" + name + "=([^&#]*)");
+  const results = regex.exec(location.search);
+  return results === null
+    ? ""
+    : decodeURIComponent(results[1].replace(/\+/g, " "));
+}
+
+
+document.addEventListener("DOMContentLoaded", () => {
+const image = getUrlParameter("image");
+const price = getUrlParameter("price");
+
+
+const carImage = document.getElementById("car-image");
+  carImage.src = image;
+  carImage.style.width = "900px";
+  carImage.style.height = "500";
+  
+
+
+// Display the selected car's image and price on the second page
+document.getElementById("car-image").src = image;
+document.getElementById("car-price").innerText = price;
+});
+
+
+
