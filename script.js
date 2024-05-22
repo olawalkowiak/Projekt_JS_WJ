@@ -1,3 +1,4 @@
+
 let vehicles = [
   {
     id: 1,
@@ -94,117 +95,118 @@ function searchCars() {
   });
 
   displayCards(results, "searchResults");
+  
 }
 
 // SECOND PAGE
 
 document.addEventListener("DOMContentLoaded", () => {
-  let accessories = [
-    {
-      name: "opony zimowe",
-      price: "7000",
-    },
-    {
-      name: "pokrowce na fotele",
-      price: "1500",
-    },
-    {
-      name: "kołpaki",
-      price: "1000",
-    },
-    {
-      name: "powłoka ceramiczna",
-      price: "15000",
-    },
-    {
-      name: "przyciemnianie szyb",
-      price: "4000",
-    },
-    {
-      name: "pakiet serwisowy 1 rok",
-      price: "900",
-    },
-  ];
+let accessories = [
+  {
+    name: "opony zimowe",
+    price: "7000",
+  },
+  {
+    name: "pokrowce na fotele",
+    price: "1500",
+  },
+  {
+    name: "kołpaki",
+    price: "1000",
+  },
+  {
+    name: "powłoka ceramiczna",
+    price: "15000",
+  },
+  {
+    name: "przyciemnianie szyb",
+    price: "4000",
+  },
+  {
+    name: "pakiet serwisowy 1 rok",
+    price: "900",
+  },
+];
 
-  function generateAccessoryCheckboxes(accessories) {
-    let html = "";
-    for (let i = 0; i < accessories.length; i++) {
-      let accessory = accessories[i];
-      html += `
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="accessory[]" id="${accessory.name}" value="${accessory.price}">
-                <label class="form-check-label" for="${accessory.name}">
-                  ${accessory.name} - ${accessory.price} zł
-                </label>
-              </div>
-            `;
-    }
-    return html;
+function generateAccessoryCheckboxes(accessories) {
+  let html = "";
+  for (let i = 0; i < accessories.length; i++) {
+    let accessory = accessories[i];
+    html += `
+    <div class="form-check">
+    <input class="form-check-input" type="checkbox" name="accessory[]" id="${accessory.name}" value="${accessory.price}">
+    <label class="form-check-label" for="${accessory.name}">
+    ${accessory.name} - ${accessory.price} zł
+    </label>
+    </div>
+    `;
   }
+  return html;
+}
 
-  function calculateTotalPrice(accessories) {
-    let totalPrice = 0;
-    let selectedAccessories = document.querySelectorAll(
-      'input[name="accessory[]"]:checked'
+function calculateTotalPrice( accessories) {
+  let totalPrice = 0;
+  let selectedAccessories = document.querySelectorAll(
+    'input[name="accessory[]"]:checked'
     );
     for (let i = 0; i < selectedAccessories.length; i++) {
       totalPrice += parseInt(selectedAccessories[i].value);
     }
-  
-     document.getElementById("total-price").innerText = `Suma: ${totalPrice} zł`;
-}
     
-
-  document.getElementById("accessory-container").innerHTML =
-    generateAccessoryCheckboxes(accessories);
-  calculateTotalPrice(accessories);
-
-  document
-    .querySelectorAll('input[name="accessory[]"]')
-    .forEach((accessory) => {
-      accessory.addEventListener("change", () => {
-        calculateTotalPrice(accessories);
-      });
-    });
-});
-
-// przekierowanie z 1 do 2 strony za pomocą przycisku "Kupuje"
-
-function showMoreInfo(index) {
-  const vehicle = vehicles[index];
-  const url = `orderConfig.html?image=${encodeURIComponent(
-    vehicle.img
-  )}&price=${encodeURIComponent(vehicle.price)}`;
-  sessionStorage.setItem("carPrice", vehicle.price);
-  window.location.href = url;
-}
-
-function getUrlParameter(name) {
-  name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-  const regex = new RegExp("[\\?&]" + name + "=([^&#]*)");
-  const results = regex.exec(location.search);
-  return results === null
-    ? ""
-    : decodeURIComponent(results[1].replace(/\+/g, " "));
-}
-
-
-document.addEventListener("DOMContentLoaded", () => {
-const image = getUrlParameter("image");
-const price = getUrlParameter("price");
-
-
-const carImage = document.getElementById("car-image");
-  carImage.src = image;
-  carImage.style.width = "900px";
-  carImage.style.height = "500";
+    document.getElementById("total-price").innerText = `Suma: ${totalPrice} zł`;
+  }
   
-
-
-// Display the selected car's image and price on the second page
-document.getElementById("car-image").src = image;
-document.getElementById("car-price").innerText = price;
+  
+  document.getElementById("accessory-container").innerHTML =
+  generateAccessoryCheckboxes(accessories);
+  calculateTotalPrice(accessories);
+  
+  document
+  .querySelectorAll('input[name="accessory[]"]')
+  .forEach((accessory) => {
+    accessory.addEventListener("change", () => {
+      calculateTotalPrice(accessories);
+    });
+  });
 });
+  
+  // przekierowanie z 1 do 2 strony za pomocą przycisku "Kupuje"
+  
+  function showMoreInfo(index) {
+    const vehicle = vehicles[index];
+    const url = `orderConfig.html?image=${encodeURIComponent(
+      vehicle.img
+      )}&price=${encodeURIComponent(vehicle.price)}`;
+      window.location.href = url;
+    }
+    
+    function getUrlParameter(name) {
+      name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+      const regex = new RegExp("[\\?&]" + name + "=([^&#]*)");
+      const results = regex.exec(location.search);
+      return results === null
+      ? ""
+      : decodeURIComponent(results[1].replace(/\+/g, " "));
+    }
+    
+    
+    document.addEventListener("DOMContentLoaded", () => {
+      const image = getUrlParameter("image");
+      const price = getUrlParameter("price");
+      
+      
+      
+      const carImage = document.getElementById("car-image");
+      carImage.src = image;
+      carImage.style.width = "900px";
+      carImage.style.height = "500";
+      
+      
+      
+      // Display the selected car's image and price on the second page
+      document.getElementById("car-image").src = image;
+      document.getElementById("car-price").innerText = price;
+    });
+ 
 
-
-
+  
