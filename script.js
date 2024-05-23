@@ -45,6 +45,10 @@ let vehicles = [
     img: "https://aaaautoeuimg.vshcdn.net/thumb/900386432_1024x768x95.jpg?97023",
   },
 ];
+function calculateTotalPrice(vehiclePrice, accessoriesPrice) {
+  const totalPrice =  parseInt(vehiclePrice) + parseInt(accessoriesPrice);
+  return totalPrice;
+}
 document.addEventListener("DOMContentLoaded", () => {
   displayCards(vehicles);
 });
@@ -72,7 +76,13 @@ function displayCards(vehicles) {
     row += "</div>";
     html += row;
   }
-  document.getElementById("card-container").innerHTML = html;
+  const cardContainer = document.getElementById("card-container");
+  if (cardContainer) {
+    cardContainer.innerHTML = html;
+  } else {
+    console.error("Element with id 'card-container' not found.");
+  }
+  // document.getElementById("card-container").innerHTML = html;
 }
 
 // wyszukiwanie aut
@@ -141,10 +151,13 @@ function generateAccessoryCheckboxes(accessories) {
     </div>
     `;
   }
+
+  document.getElementById("accessory-container").innerHTML =html;
+  calculateTotalPrice(getUrlParameter("price"), accessories);
   return html;
 }
 
-function calculateTotalPrice( accessories) {
+function calculateTotalPrice(vehiclePrice, accessories) {
   let totalPrice = 0;
   let selectedAccessories = document.querySelectorAll(
     'input[name="accessory[]"]:checked'
@@ -152,41 +165,52 @@ function calculateTotalPrice( accessories) {
     for (let i = 0; i < selectedAccessories.length; i++) {
       totalPrice += parseInt(selectedAccessories[i].value);
     }
-    
+    totalPrice += parseInt(vehiclePrice,10)
     document.getElementById("total-price").innerText = `Suma: ${totalPrice} zł`;
   }
   
   
   document.getElementById("accessory-container").innerHTML =
   generateAccessoryCheckboxes(accessories);
-  calculateTotalPrice(accessories);
+  calculateTotalPrice(getUrlParameter("price"), accessories);
   
   document
   .querySelectorAll('input[name="accessory[]"]')
   .forEach((accessory) => {
     accessory.addEventListener("change", () => {
-      calculateTotalPrice(accessories);
+      calculateTotalPrice(getUrlParameter("price"), accessories);
     });
   });
 });
-  
-  // przekierowanie z 1 do 2 strony za pomocą przycisku "Kupuje"
-  
-  function showMoreInfo(index) {
-    const vehicle = vehicles[index];
+
+
+// przekierowanie z 1 do 2 strony za pomocą przycisku "Kupuje"
+
+function showMoreInfo(index) {
+  const vehicle = vehicles[index];
+  const accessories = document.querySelectorAll(
+    'input[name="accessory[]"]:checked'
+    );
+    let accessoriesPrice = 0;
+    for (let i = 0; i < accessories.length; i++) {
+      accessoriesPrice += parseInt(accessories[i].value);
+    }
     const url = `orderConfig.html?image=${encodeURIComponent(
       vehicle.img
-      )}&price=${encodeURIComponent(vehicle.price)}`;
-      window.location.href = url;
-    }
-    
-    function getUrlParameter(name) {
-      name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+      )}&price=${encodeURIComponent(vehicle.price)}&accessoriesPrice=${encodeURIComponent(
+        accessoriesPrice
+        )}`;
+        window.location.href = url;
+      }
+      // / Calculate the total price
+      const totalPrice = calculateTotalPrice(vehicle.price, accessoriesPrice);
+      document.getElementById("total-price").innerText = `Suma: ${totalPrice} zł`;
+      
+      function getUrlParameter(name) {
+        name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
       const regex = new RegExp("[\\?&]" + name + "=([^&#]*)");
       const results = regex.exec(location.search);
-      return results === null
-      ? ""
-      : decodeURIComponent(results[1].replace(/\+/g, " "));
+      return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
     }
     
     
@@ -199,14 +223,14 @@ function calculateTotalPrice( accessories) {
       const carImage = document.getElementById("car-image");
       carImage.src = image;
       carImage.style.width = "900px";
-      carImage.style.height = "500";
+      carImage.style.height = "500px";
       
       
       
       // Display the selected car's image and price on the second page
       document.getElementById("car-image").src = image;
       document.getElementById("car-price").innerText = price;
+    
     });
+    
  
-
-  
