@@ -204,10 +204,10 @@ document.addEventListener("DOMContentLoaded", () => {
           const image = encodeURIComponent(vehicle.img);
           const price = encodeURIComponent(vehicle.price);
           window.location.href = url;
-        }
+        
         // / Calculate the total price
         const totalPrice = calculateTotalPrice(vehicle.price, accessoriesPrice);
-        document.getElementById("total-price").innerText = `Suma: ${totalPrice} zł`;
+        document.getElementById("total-price").innerText = `Suma: ${totalPrice} zł`;}
         
         function getUrlParameter(name) {
           name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
@@ -219,7 +219,6 @@ document.addEventListener("DOMContentLoaded", () => {
         document.addEventListener("DOMContentLoaded", () => {
           
       const image = decodeURIComponent(getUrlParameter("image"));
-      const price = getUrlParameter("price");
       
       
       const carImage = document.getElementById("car-image");
