@@ -158,14 +158,14 @@ function generateAccessoryCheckboxes(accessories) {
 }
 
 function calculateTotalPrice(vehiclePrice, accessories) {
-  let totalPrice = 0;
+  let totalPrice = parseInt(vehiclePrice.replace(/\s/g, ''),10); 
   let selectedAccessories = document.querySelectorAll(
     'input[name="accessory[]"]:checked'
     );
     for (let i = 0; i < selectedAccessories.length; i++) {
       totalPrice += parseInt(selectedAccessories[i].value);
     }
-    totalPrice += parseInt(vehiclePrice,10)
+    
     document.getElementById("total-price").innerText = `Suma: ${totalPrice} zł`;
   }
   
