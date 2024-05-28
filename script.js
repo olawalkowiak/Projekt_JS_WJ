@@ -224,7 +224,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 function displayDeliveryDate() {
   const today = new Date();
-  const deliveryDate = new Date(today.getTime() + 14 * 24 * 60 * 60 * 1000);
+  const deliveryDate = new Date(today.getTime() + 1209600 * 1000);
   const formattedDate = deliveryDate.toLocaleDateString('pl-PL', {
     year: 'numeric',
     month: 'long',
@@ -247,10 +247,12 @@ function storeFormData() {
     deliveryDate: document.getElementById('delivery-date').innerText
   };
 
+  
   localStorage.setItem('carForm', JSON.stringify(formData));
+  
 }
 
-// Function to retrieve form data from local storage
+
 function retrieveFormData() {
   const storedData = localStorage.getItem('carForm');
   if (storedData) {
@@ -260,6 +262,7 @@ function retrieveFormData() {
     document.getElementById('lname').innerText = formData.lname;
     document.getElementById('delivery-date').innerText = formData.deliveryDate;
   }
+  
 }
 
 
@@ -269,7 +272,8 @@ if (document.getElementById('carForm')) {
 
   
   const submitButton = document.createElement('button');
-  submitButton.textContent = 'Submit';
+  submitButton.textContent = 'Zamów';
+  submitButton.className = 'submitButton';
   submitButton.onclick = function() {
     storeFormData();
     window.location.href = 'congrats.html';
