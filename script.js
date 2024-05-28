@@ -1,4 +1,3 @@
-
 let vehicles = [
   {
     id: 1,
@@ -46,7 +45,7 @@ let vehicles = [
   },
 ];
 function calculateTotalPrice(vehiclePrice, accessoriesPrice) {
-  const totalPrice =  parseInt(vehiclePrice) + parseInt(accessoriesPrice);
+  const totalPrice = parseInt(vehiclePrice) + parseInt(accessoriesPrice);
   return totalPrice;
 }
 document.addEventListener("DOMContentLoaded", () => {
@@ -85,27 +84,24 @@ function displayCards(vehicles) {
   // document.getElementById("card-container").innerHTML = html;
 }
 
-// wyszukiwanie aut
-
 function searchCars() {
   const brand = document.getElementById("carBrand").value.toLowerCase();
   const model = document.getElementById("carModel").value.toLowerCase();
   const prodYear = parseInt(document.getElementById("carProdYear").value, 10);
   const priceRange =
-  parseInt(document.getElementById("floatingSelect").value, 10) * 10000;
-  
+    parseInt(document.getElementById("floatingSelect").value, 10) * 10000;
+
   const results = vehicles.filter((vehicle) => {
     const matchesBrand = !brand || vehicle.brand.toLowerCase().includes(brand);
     const matchesModel = !model || vehicle.model.toLowerCase().includes(model);
     const matchesYear = !prodYear || vehicle.productionYear >= prodYear;
     const matchesPrice =
-    !priceRange || parseInt(vehicle.price.replace(" ", ""), 10) >= priceRange;
-    
+      !priceRange || parseInt(vehicle.price.replace(" ", ""), 10) >= priceRange;
+
     return matchesBrand && matchesModel && matchesYear && matchesPrice;
   });
-  
+
   displayCards(results, "searchResults");
-  
 }
 
 // SECOND PAGE
@@ -137,7 +133,7 @@ document.addEventListener("DOMContentLoaded", () => {
       price: "900",
     },
   ];
-  
+
   function generateAccessoryCheckboxes(accessories) {
     let html = "";
     for (let i = 0; i < accessories.length; i++) {
@@ -151,87 +147,135 @@ document.addEventListener("DOMContentLoaded", () => {
       </div>
       `;
     }
-    
-    document.getElementById("accessory-container").innerHTML =html;
+
+    document.getElementById("accessory-container").innerHTML = html;
     calculateTotalPrice(getUrlParameter("price"), accessories);
     return html;
   }
-  
+
   function calculateTotalPrice(vehiclePrice, accessories) {
-    let totalPrice = parseInt(vehiclePrice.replace(/\s/g, ''),10); 
+    let totalPrice = parseInt(vehiclePrice.replace(/\s/g, ""), 10);
     let selectedAccessories = document.querySelectorAll(
       'input[name="accessory[]"]:checked'
-      );
-      for (let i = 0; i < selectedAccessories.length; i++) {
-        totalPrice += parseInt(selectedAccessories[i].value);
-      }
-      
-      document.getElementById("total-price").innerText = `Suma: ${totalPrice} zł`;
+    );
+    for (let i = 0; i < selectedAccessories.length; i++) {
+      totalPrice += parseInt(selectedAccessories[i].value);
     }
-    
-    
-    document.getElementById("accessory-container").innerHTML =
+
+    document.getElementById("total-price").innerText = `Suma: ${totalPrice} zł`;
+  }
+
+  document.getElementById("accessory-container").innerHTML =
     generateAccessoryCheckboxes(accessories);
-    calculateTotalPrice(getUrlParameter("price"), accessories);
-    
-    document
+  calculateTotalPrice(getUrlParameter("price"), accessories);
+
+  document
     .querySelectorAll('input[name="accessory[]"]')
     .forEach((accessory) => {
       accessory.addEventListener("change", () => {
         calculateTotalPrice(getUrlParameter("price"), accessories);
       });
     });
+});
+
+function showMoreInfo(index, vehicles) {
+  const vehicle = vehicles[index];
+  const accessories = document.querySelectorAll(
+    'input[name="accessory[]"]:checked'
+  );
+  let accessoriesPrice = 0;
+  for (let i = 0; i < accessories.length; i++) {
+    accessoriesPrice += parseInt(accessories[i].value);
+  }
+
+  const url = `orderConfig.html?image=${encodeURIComponent(
+    vehicle.img
+  )}&price=${encodeURIComponent(
+    vehicle.price
+  )}&accessoriesPrice=${encodeURIComponent(accessoriesPrice)}`;
+  const image = encodeURIComponent(vehicle.img);
+  const price = encodeURIComponent(vehicle.price);
+  window.location.href = url;
+
+  const totalPrice = calculateTotalPrice(vehicle.price, accessoriesPrice);
+  document.getElementById("total-price").innerText = `Suma: ${totalPrice} zł`;
+}
+
+function getUrlParameter(name) {
+  name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+  const regex = new RegExp("[\\?&]" + name + "=([^&#]*)");
+  const results = regex.exec(location.search);
+  return results === null
+    ? ""
+    : decodeURIComponent(results[1].replace(/\+/g, " "));
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  const image = decodeURIComponent(getUrlParameter("image"));
+
+  const carImage = document.getElementById("car-image");
+  carImage.src = image;
+  carImage.style.width = "900px";
+  carImage.style.height = "500px";
+
+  document.getElementById("car-image").src = image;
+  document.getElementById("car-price").innerText = price;
+});
+
+function displayDeliveryDate() {
+  const today = new Date();
+  const deliveryDate = new Date(today.getTime() + 14 * 24 * 60 * 60 * 1000);
+  const formattedDate = deliveryDate.toLocaleDateString('pl-PL', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
   });
-  
-  
-  // przekierowanie z 1 do 2 strony za pomocą przycisku "Kupuje"
-  
-  function showMoreInfo(index, vehicles) {
-    const vehicle = vehicles[index];
-    const accessories = document.querySelectorAll(
-      'input[name="accessory[]"]:checked'
-      );
-      let accessoriesPrice = 0;
-      for (let i = 0; i < accessories.length; i++) {
-        accessoriesPrice += parseInt(accessories[i].value);
-      }
-      
-      const url = `orderConfig.html?image=${encodeURIComponent(
-        vehicle.img
-        )}&price=${encodeURIComponent(vehicle.price)}&accessoriesPrice=${encodeURIComponent(
-          accessoriesPrice
-          )}`;
-          const image = encodeURIComponent(vehicle.img);
-          const price = encodeURIComponent(vehicle.price);
-          window.location.href = url;
-        
-        // / Calculate the total price
-        const totalPrice = calculateTotalPrice(vehicle.price, accessoriesPrice);
-        document.getElementById("total-price").innerText = `Suma: ${totalPrice} zł`;}
-        
-        function getUrlParameter(name) {
-          name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-          const regex = new RegExp("[\\?&]" + name + "=([^&#]*)");
-          const results = regex.exec(location.search);
-          return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
-        }
-        
-        document.addEventListener("DOMContentLoaded", () => {
-          
-      const image = decodeURIComponent(getUrlParameter("image"));
-      
-      
-      const carImage = document.getElementById("car-image");
-      carImage.src = image;
-      carImage.style.width = "900px";
-      carImage.style.height = "500px";
-      
-      
-      
-      // Display the selected car's image and price on the second page
-      document.getElementById("car-image").src = image;
-      document.getElementById("car-price").innerText = price;
-      
-    });
-    
+  document.getElementById('delivery-date').innerText = formattedDate;
+}
+
+displayDeliveryDate();
+
  
+let formData = {};
+
+// Function to store form data in local storage
+function storeFormData() {
+  formData = {
+    financing: document.querySelector('input[name="financing"]:checked').id,
+    fname: document.getElementById('fname').value,
+    lname: document.getElementById('lname').value,
+    deliveryDate: document.getElementById('delivery-date').innerText
+  };
+
+  localStorage.setItem('carForm', JSON.stringify(formData));
+}
+
+// Function to retrieve form data from local storage
+function retrieveFormData() {
+  const storedData = localStorage.getItem('carForm');
+  if (storedData) {
+    formData = JSON.parse(storedData);
+    document.getElementById('financing').innerText = formData.financing;
+    document.getElementById('fname').innerText = formData.fname;
+    document.getElementById('lname').innerText = formData.lname;
+    document.getElementById('delivery-date').innerText = formData.deliveryDate;
+  }
+}
+
+
+if (document.getElementById('carForm')) {
+  
+  document.addEventListener('input', storeFormData);
+
+  
+  const submitButton = document.createElement('button');
+  submitButton.textContent = 'Submit';
+  submitButton.onclick = function() {
+    storeFormData();
+    window.location.href = 'congrats.html';
+  };
+  document.body.appendChild(submitButton);
+} else {
+  
+  retrieveFormData();
+}

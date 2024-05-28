@@ -62,19 +62,20 @@
           <span id="car-price"></span>
         </div>
         <div class="total-cost" id="total-price"><span id="total-price-style"> Suma 0 PLN</span></div>
+
       </div>
       <div class="col-4">
-        <div class="carForm">
+        <div id="carForm">
           <div class="purchase-form">
             <p class="radio-text"> 1. Preferowana metoda finansowania:</p>
             <div class="radio-group"> 
               
               <div class="col-8">
-                <input lass="form-check-input" type="radio" id="cash" />
+                <input class="form-check-input" type="radio" id="cash" name="financing" />
                 <label class="form-check-label for="cash">Gotówka</label>
               </div>
               <div class="col-8">
-                <input class="form-check-input" type="radio" id="leasing" />
+                <input class="form-check-input" type="radio" id="leasing" name="financing" />
                 <label class="form-check-label for="leasing">Leasing</label>
                 
               </div>
@@ -96,11 +97,8 @@
                 </div>
               </form>
               <div class="date">
-                <div class="date-text">3. Wybierz date odbioru auta:</div>
-                <div class="date-form">
-                  <input type="date" class="date-picker">
-                </div>
-                
+                <div class="date-text">3. Przewidywana data odbioru:</div>
+                <div id="delivery-date"></div>
               </div>
               
               <div class="add-accessories">
@@ -116,6 +114,7 @@
           </div>
         </div>
       </div>
+      <div><a id="final-button" class="btn btn-primary" href="congrats.html">Zamów</a></div>
     </div>
   </div>
   <script src="script.js"></script>
