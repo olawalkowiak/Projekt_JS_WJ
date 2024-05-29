@@ -225,61 +225,83 @@ document.addEventListener("DOMContentLoaded", () => {
 function displayDeliveryDate() {
   const today = new Date();
   const deliveryDate = new Date(today.getTime() + 1209600 * 1000);
-  const formattedDate = deliveryDate.toLocaleDateString('pl-PL', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric'
+  const formattedDate = deliveryDate.toLocaleDateString("pl-PL", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
   });
-  document.getElementById('delivery-date').innerText = formattedDate;
+  document.getElementById("delivery-date").innerText = formattedDate;
 }
 
 displayDeliveryDate();
 
- 
 let formData = {};
 
-// Function to store form data in local storage
+
 function storeFormData() {
   formData = {
     financing: document.querySelector('input[name="financing"]:checked').id,
-    fname: document.getElementById('fname').value,
-    lname: document.getElementById('lname').value,
-    deliveryDate: document.getElementById('delivery-date').innerText
+    fname: document.getElementById("fname").value,
+    lname: document.getElementById("lname").value,
+    deliveryDate: document.getElementById("delivery-date").innerText,
+    totalPrice: document
+      .getElementById("total-price")
+      .innerText.replace("Suma: ", ""),
+      imageUrl: document.getElementById('car-image').src,
   };
 
-  
-  localStorage.setItem('carForm', JSON.stringify(formData));
-  
+  localStorage.setItem("carForm", JSON.stringify(formData));
 }
-
 
 function retrieveFormData() {
-  const storedData = localStorage.getItem('carForm');
+  const storedData = localStorage.getItem("carForm");
   if (storedData) {
     formData = JSON.parse(storedData);
-    document.getElementById('financing').innerText = formData.financing;
-    document.getElementById('fname').innerText = formData.fname;
-    document.getElementById('lname').innerText = formData.lname;
-    document.getElementById('delivery-date').innerText = formData.deliveryDate;
+    document.getElementById("financing").innerText = formData.financing;
+    document.getElementById("fname").innerText = formData.fname;
+    document.getElementById("lname").innerText = formData.lname;
+    document.getElementById("delivery-date").innerText = formData.deliveryDate;
   }
-  
 }
 
+if (document.getElementById("carForm")) {
+  document.addEventListener("input", storeFormData);
 
-if (document.getElementById('carForm')) {
-  
-  document.addEventListener('input', storeFormData);
-
-  
-  const submitButton = document.createElement('button');
-  submitButton.textContent = 'Zamów';
-  submitButton.className = 'submitButton';
-  submitButton.onclick = function() {
+  const submitButton = document.createElement("button");
+  submitButton.textContent = "Zamów";
+  submitButton.className = "submitButton";
+  submitButton.onclick = function () {
     storeFormData();
-    window.location.href = 'congrats.html';
+    const totalPrice = formData.totalPrice;
+    const imageUrl = formData.imageUrl;
+    const url = `congrats.html?totalPrice=${totalPrice}&imageUrl=${encodeURIComponent(imageUrl)}`;
+    window.location.href = url;
+
   };
   document.body.appendChild(submitButton);
 } else {
-  
   retrieveFormData();
 }
+
+function displayTotalPrice() {
+  const totalPrice = getUrlParameter("totalPrice");
+  if (totalPrice) {
+    document.getElementById("total-price-final").innerText =
+      "Suma: " + totalPrice;
+  }
+}
+
+
+displayTotalPrice();
+
+document.addEventListener('DOMContentLoaded', () => {
+  function displayImage() {
+    const imageUrl = getUrlParameter('imageUrl');
+    if (imageUrl) {
+      document.getElementById('result-image').src = imageUrl;
+    }
+  }
+
+  
+  displayImage();
+});
