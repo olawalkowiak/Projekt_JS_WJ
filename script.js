@@ -89,7 +89,7 @@ function searchCars() {
   const model = document.getElementById("carModel").value.toLowerCase();
   const prodYear = parseInt(document.getElementById("carProdYear").value, 10);
   const priceRange =
-    parseInt(document.getElementById("floatingSelect").value, 10) * 10000;
+    parseInt(document.getElementById("floatingSelect").value, 10);
 
   const results = vehicles.filter((vehicle) => {
     const matchesBrand = !brand || vehicle.brand.toLowerCase().includes(brand);
@@ -105,6 +105,7 @@ function searchCars() {
 }
 
 // SECOND PAGE
+
 
 document.addEventListener("DOMContentLoaded", () => {
   let accessories = [
@@ -235,6 +236,8 @@ function displayDeliveryDate() {
 
 displayDeliveryDate();
 
+
+
 let formData = {};
 
 
@@ -271,6 +274,19 @@ if (document.getElementById("carForm")) {
   submitButton.textContent = "Zamów";
   submitButton.className = "submitButton";
   submitButton.onclick = function () {
+
+
+    const fname = document.getElementById("fname").value;
+    const lname = document.getElementById("lname").value;
+
+    if (!fname) {
+      alert("Proszę wprowadzić swoje imię.");
+      return;
+    } else if (!lname) {
+      alert("Proszę wprowadzić swoje nazwisko.");
+      return;
+    }
+
     storeFormData();
     const totalPrice = formData.totalPrice;
     const imageUrl = formData.imageUrl;
@@ -305,3 +321,4 @@ document.addEventListener('DOMContentLoaded', () => {
   
   displayImage();
 });
+
