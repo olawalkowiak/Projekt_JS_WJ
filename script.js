@@ -81,31 +81,30 @@ function displayCards(vehicles) {
   } else {
     console.error("Element with id 'card-container' not found.");
   }
-  // document.getElementById("card-container").innerHTML = html;
+
 }
 
 function searchCars() {
   const brand = document.getElementById("carBrand").value.toLowerCase();
   const model = document.getElementById("carModel").value.toLowerCase();
   const prodYear = parseInt(document.getElementById("carProdYear").value, 10);
-  const priceRange =
-    parseInt(document.getElementById("floatingSelect").value, 10);
+  const priceRange = parseInt(
+    document.getElementById("floatingSelect").value,
+    10
+  );
 
   const results = vehicles.filter((vehicle) => {
     const matchesBrand = !brand || vehicle.brand.toLowerCase().includes(brand);
     const matchesModel = !model || vehicle.model.toLowerCase().includes(model);
     const matchesYear = !prodYear || vehicle.productionYear >= prodYear;
     const matchesPrice =
-      !priceRange || parseInt(vehicle.price.replace(" ", ""), 10) >= priceRange;
+      !priceRange || parseInt(vehicle.price.replace(" ", ""), 10) > priceRange;
 
     return matchesBrand && matchesModel && matchesYear && matchesPrice;
   });
 
   displayCards(results, "searchResults");
 }
-
-// SECOND PAGE
-
 
 document.addEventListener("DOMContentLoaded", () => {
   let accessories = [
@@ -236,10 +235,7 @@ function displayDeliveryDate() {
 
 displayDeliveryDate();
 
-
-
 let formData = {};
-
 
 function storeFormData() {
   formData = {
@@ -250,7 +246,7 @@ function storeFormData() {
     totalPrice: document
       .getElementById("total-price")
       .innerText.replace("Suma: ", ""),
-      imageUrl: document.getElementById('car-image').src,
+    imageUrl: document.getElementById("car-image").src,
   };
 
   localStorage.setItem("carForm", JSON.stringify(formData));
@@ -274,8 +270,6 @@ if (document.getElementById("carForm")) {
   submitButton.textContent = "Zamów";
   submitButton.className = "submitButton";
   submitButton.onclick = function () {
-
-
     const fname = document.getElementById("fname").value;
     const lname = document.getElementById("lname").value;
 
@@ -290,9 +284,10 @@ if (document.getElementById("carForm")) {
     storeFormData();
     const totalPrice = formData.totalPrice;
     const imageUrl = formData.imageUrl;
-    const url = `congrats.html?totalPrice=${totalPrice}&imageUrl=${encodeURIComponent(imageUrl)}`;
+    const url = `congrats.html?totalPrice=${totalPrice}&imageUrl=${encodeURIComponent(
+      imageUrl
+    )}`;
     window.location.href = url;
-
   };
   document.body.appendChild(submitButton);
 } else {
@@ -307,18 +302,23 @@ function displayTotalPrice() {
   }
 }
 
-
 displayTotalPrice();
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener("DOMContentLoaded", () => {
   function displayImage() {
-    const imageUrl = getUrlParameter('imageUrl');
+    const imageUrl = getUrlParameter("imageUrl");
     if (imageUrl) {
-      document.getElementById('result-image').src = imageUrl;
+      document.getElementById("result-image").src = imageUrl;
     }
   }
 
-  
   displayImage();
 });
+
+const submitButton = document.getElementById('goBackBtn');
+submitButton.addEventListener('click', function() {
+  window.location.href = 'index.html';
+});
+
+
 
